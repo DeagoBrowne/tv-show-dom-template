@@ -31,6 +31,7 @@ const footerEl = document.getElementById("footer");
 const searchBar = document.getElementById("search");
 
 
+
 // Variable to access object keys from within function
 const episodes = getAllEpisodes();
 
@@ -89,8 +90,26 @@ function episodeFilter(event) {
 }
 
 
+// Episode Selection Box
+const EpSelection = document.getElementById("selection");
+
+
+
+// Populate Selection Box
+function SelectEp () {
+  const options = episodes.map(episode => {
+    `<option value = ${episode.name}>${episode.name} S0${episode.season} E0${episode.number}</option>`});
+    console.log(options);
+
+    EpSelection.innerHTML = options;
+  };
+
+
 
 window.onload = setup;
+
+
+
 
 // var xmlString = "<div id='foo'><a href='#'>Link</a><span></span></div>";
 // var doc = new DOMParser().parseFromString(xmlString, "text/xml");
