@@ -30,6 +30,33 @@ const footerEl = document.getElementById("footer");
 // Search Bar
 const searchBar = document.getElementById("search");
 
+// function to filter episodes
+function episodeFilter(event) {
+  const searchValue = event.target.value.toLowerCase();
+  const filter = getAllEpisodes().filter((episode) => {
+    const epName = episode.name.toLowerCase();
+    const epSummary = episode.summary.toLowerCase();
+    return (epName.includes(searchValue) || epSummary.includes(searchValue));
+  });
+  makePageForEpisodes(filter);
+}
+
+
+// Episode Selection Box
+const epSelection = document.getElementById("selection");
+
+
+// Populate Selection Box
+function selectEp () {
+  getAllEpisodes().forEach(episode => {
+  const option = document.createElement('option');
+  option.value = episode.name;
+  option.innerText = `${episode.name} S0${episode.season} E0${episode.number}`;
+    epSelection.append(option);
+  })
+}
+
+
 
 
 // Variable to access object keys from within function
@@ -38,6 +65,8 @@ const episodes = getAllEpisodes();
 
 function setup() {
   makePageForEpisodes(episodes);
+  selectEp(episodes);
+  epSelection.addEventListener('click', episodeFilter);
   searchBar.addEventListener('keydown', episodeFilter);
 }
 
@@ -79,31 +108,6 @@ function makePageForEpisodes(episodes) {
     episodeBox.append(card);
   });
 }
-
-// function to filter episodes
-function episodeFilter(event) {
-  const searchValue = event.target.value.toLowerCase();
-  const filter = getAllEpisodes().filter((episode) => {
-    return episode.name.toLowerCase().includes(searchValue);
-  });
-  makePageForEpisodes(filter);
-}
-
-
-// Episode Selection Box
-const EpSelection = document.getElementById("selection");
-
-
-
-// Populate Selection Box
-function SelectEp () {
-  const options = episodes.map(episode => {
-    `<option value = ${episode.name}>${episode.name} S0${episode.season} E0${episode.number}</option>`});
-    console.log(options);
-
-    EpSelection.innerHTML = options;
-  };
-
 
 
 window.onload = setup;
